@@ -113,11 +113,12 @@ double statisticMathExpectation(const std::vector<double> *values) {
     return NAN;
   }
 
-  double res = 0;
-  for (auto i : (*values)) {
-    res += i;
+  long double res = 0;
+  double size = (*values).size();
+
+  for (auto i : *values) {
+    res += i / size;
   }
-  res /= (*values).size();
   return res;
 }
 
@@ -127,10 +128,10 @@ double statisticVariation(const std::vector<double> *values) {
   }
 
   double res = 0, M = statisticMathExpectation(values);
+  double size = (*values).size();
   for (auto i : (*values)) {
-    res += pow(i - M, 2);
+    res += pow(i - M, 2) / size;
   }
-  res /= (*values).size();
   return res;
 }
 
@@ -140,13 +141,12 @@ double statisticSkewness(const std::vector<double> *values) {
   }
 
   double res = 0, M = statisticMathExpectation(values),
-         D = statisticVariation(values);
-
+         D = statisticVariation(values), size = (*values).size();
   for (auto i : (*values)) {
-    res += pow(i - M, 3);
+    res += pow(i - M, 3) / size;
   }
 
-  res /= ((*values).size() * pow(D, 1.5));
+  res /= pow(D, 1.5);
   return res;
 }
 
@@ -156,12 +156,12 @@ double statisticKurtosis(const std::vector<double> *values) {
   }
 
   double res = 0, M = statisticMathExpectation(values),
-         D = statisticVariation(values);
+         D = statisticVariation(values), size = (*values).size();
 
   for (auto i : (*values)) {
-    res += pow(i - M, 4);
+    res += pow(i - M, 4) / size;
   }
 
-  res = res / ((*values).size() * pow(D, 2)) - 3;
+  res = res / pow(D, 2) - 3;
   return res;
 }

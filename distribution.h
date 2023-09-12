@@ -6,9 +6,8 @@
 #include <vector>
 #include <stdio.h>
 
-#define SEED 19
 #define M_PI 3.14159265358979323846
-#define EPSILON 1e-17
+#define EPSILON 1e-16
 /*
         utility.cpp
 */

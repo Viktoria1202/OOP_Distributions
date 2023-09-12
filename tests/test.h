@@ -1,7 +1,9 @@
 #ifndef SRC_TESTS_TESTS_H_
 #define SRC_TESTS_TESTS_H_
 
+#ifdef linux
 #include <check.h>
+#endif  // linux
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,7 +19,9 @@
 #define WHITE_BG "\x1b[47m"
 #define GRAY_BG "\x1b[100m"
 
+#ifdef linux
 Suite *suite_Huber_Destr();
+#endif  // linux
 
 void run();
 

@@ -22,7 +22,10 @@ double HuberDistributionGetNumber(double form_factor, double shift_factor,
       res = sqrt(-2.0 * log(r1)) * cos(2.0 * M_PI * r2);
     }
   } else {
-    double r1 = uniformDistributionGetNumber();
+    double r1 = 0;
+    while (fabs(r1) <= EPSILON || fabs(r1 - 1) <= EPSILON) {
+      r1 = uniformDistributionGetNumber();   
+    }    
     res = form_factor - log(r1) / form_factor;
     if (first_rand >= 0.5 * (1 + P_coefficient)) res = -res;
   }
