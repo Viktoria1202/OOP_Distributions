@@ -24,8 +24,8 @@ double HuberDistributionGetNumber(double form_factor, double shift_factor,
   } else {
     double r1 = 0;
     while (fabs(r1) <= EPSILON || fabs(r1 - 1) <= EPSILON) {
-      r1 = uniformDistributionGetNumber();   
-    }    
+      r1 = uniformDistributionGetNumber();
+    }
     res = form_factor - log(r1) / form_factor;
     if (first_rand >= 0.5 * (1 + P_coefficient)) res = -res;
   }
@@ -113,7 +113,7 @@ double HuberDistributionKurtosis(double form_factor, double shift_factor,
   res += 2 * standardDistributionDensity(form_factor) *
          (24 * pow(form_factor, -5) + 24 * pow(form_factor, -3) +
           12 / form_factor + form_factor);
-  res /= pow(variation, 2) * K_coefficient;
+  res /= (pow(variation, 2) * K_coefficient);
   res -= 3;
   return res;
 }

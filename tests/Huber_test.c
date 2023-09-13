@@ -125,10 +125,10 @@ START_TEST(Distribution_mix_2) {
     Параметр смеси: 0.3
   */
   double x = 0;
-  double y_1 = 2, y_2 = 2;
+  double y_1 = 1, y_2 = 2;
   double mu_1 = 2, mu_2 = 6;
-  double lambda_1 = 2, lambda_2 = 2;
-  double p = 0.3;
+  double lambda_1 = 2, lambda_2 = 8;
+  double p = 0.8;
 
   ck_assert_double_eq_tol(
       HuberMixtureMathExpectation(p, y_1, y_2, mu_1, mu_2, lambda_1, lambda_2),
