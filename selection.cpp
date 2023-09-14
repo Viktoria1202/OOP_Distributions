@@ -6,9 +6,41 @@ int statisticGetSet(const std::vector<double> *values, int size,
     return 0;
   }
   (*dest).clear();
-  for (int i = 0; i < size; i++) {
-    dest->push_back(statisticGetNum(values));
+
+  double max = *(std::max_element((*values).begin(), (*values).end()));
+  double min = *(std::min_element((*values).begin(), (*values).end()));
+  double interval_amount = 1 + floor(log2((*values).size()));
+  double interval_len = (max - min) / interval_amount;
+
+  std::vector<double> frequences;
+  statisticDensityBuild(values, &frequences);
+  for (int i = 0; i < interval_amount; i++) {
+    frequences[i] *= interval_len;
   }
+  frequences.insert(frequences.begin(), 0.0);
+
+  double r = 0, res = 0;
+  double x_begin = 0;
+  double r_lower_bound = 0, r_upper_bound = 0;
+
+  for (int j = 0; j < size; j++) {
+    r = uniformDistributionGetNumber();
+    x_begin = 0;
+    r_lower_bound = 0, r_upper_bound = 0;
+    for (int i = 0; i < frequences.size() - 1; i++) {
+      r_lower_bound += frequences[i];
+      r_upper_bound += frequences[i + 1];
+      if (r_lower_bound <= r && r < r_upper_bound) {
+        x_begin = min + i * interval_len;
+        i += frequences.size();  // выход из цикла
+      }
+    }
+
+    res = uniformDistributionGetNumber();
+    res = x_begin + res * interval_len;
+    (*dest).push_back(res);
+  }
+
   return 1;
 }
 
@@ -99,7 +131,8 @@ int statisticDensityBuild(const std::vector<double> *values,
     for (int j = 0; j < (*values).size(); j++) {
       if (x_begin <= (*values)[j] && (*values)[j] < x_end) {
         freq_count++;
-      } else if (x_end == max && (*values)[j] == max) {
+      } else if (fabs(x_end - max) <= EPSILON &&
+                 fabs((*values)[j] - max) <= EPSILON) {
         freq_count++;
       }
     }

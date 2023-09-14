@@ -168,12 +168,12 @@ double HuberMixtureKurtosis(double mixt_param, double form_factor_1,
   double tmp_1 =
       (1 - mixt_param) *
       (pow(m_1 - m_mix, 4) + 6 * pow(m_1 - m_mix, 2) * v_1 +
-       4 * (m_1 - m_mix) * pow(v_1, 1.5) * skew_1 + v_1 * v_1 * kurt_1);
+       4 * (m_1 - m_mix) * pow(v_1, 1.5) * skew_1 + v_1 * v_1 * (kurt_1 + 3));
   double tmp_2 =
       mixt_param *
       (pow(m_2 - m_mix, 4) + 6 * pow(m_2 - m_mix, 2) * v_2 +
-       4 * (m_2 - m_mix) * pow(v_2, 1.5) * skew_2 + v_2 * v_2 * kurt_2);
-  double res = (tmp_1 + tmp_2) / pow(v_mix, 2);
+       4 * (m_2 - m_mix) * pow(v_2, 1.5) * skew_2 + v_2 * v_2 * (kurt_2 + 3));
+  double res = (tmp_1 + tmp_2) / pow(v_mix, 2) - 3;
 
   return res;
 }

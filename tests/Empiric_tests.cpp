@@ -109,37 +109,35 @@ void emp_1() {
 void emp_2() {
   double y_1, mu_1, lambda_1;
 
-  y_1 = 0.5;
+  y_1 = 1;
   mu_1 = 0;
-  lambda_1 = 1;
+  lambda_1 = 2;
 
   std::vector<double> values, other_values;
 
   printf("\n" GREEN_BG "ВЫБОРКА ПО ВЫБОРКЕ" RESET "\n");
 
   for (int i = 2; i < 7; i++) {
-    HuberDistributionGetSet(pow(10, i), &values, y_1, mu_1, lambda_1);
-    statisticGetSet(&values, pow(10, i), &other_values);
+    int size = pow(10, i);
+    HuberDistributionGetSet(size, &values, y_1, mu_1, lambda_1);
+    statisticGetSet(&values, size, &other_values);
 
     printf("-----------------\n");
     printf("Размер выборки: %.0f\n", pow(10, i));
     printf("           Нач. выборка | Вторичная выборка | Теор. \n");
-    printf("Мат. ожидание:     %.6f | %.6f | %.6f \n",
+    printf("Мат. ожидание:     % .6f | % .6f | % .6f \n",
            statisticMathExpectation(&values),
            statisticMathExpectation(&other_values),
            HuberDistributionMathExpectation(y_1, mu_1, lambda_1));
-    printf("Дисперсия:         %.6f | %.6f | %.6f \n",
-           statisticVariation(&values),
-           statisticVariation(&other_values),
+    printf("Дисперсия:         % .6f | % .6f | % .6f \n",
+           statisticVariation(&values), statisticVariation(&other_values),
            HuberDistributionVariation(y_1, mu_1, lambda_1));
-    printf("Коэф ассиметрии:   %.6f | %.6f | %.6f \n",
-           statisticSkewness(&values),
-           statisticSkewness(&other_values),
+    printf("Коэф ассиметрии:   % .6f | % .6f | % .6f \n",
+           statisticSkewness(&values), statisticSkewness(&other_values),
            HuberDistributionSkewness(y_1, mu_1, lambda_1));
 
-    printf("Коэф. эксцесса:    %.6f | %.6f | %.6f \n",
-           statisticKurtosis(&values),
-           statisticKurtosis(&other_values),
+    printf("Коэф. эксцесса:    % .6f | % .6f | % .6f \n",
+           statisticKurtosis(&values), statisticKurtosis(&other_values),
            HuberDistributionKurtosis(y_1, mu_1, lambda_1));
-       }
+  }
 }
