@@ -3,23 +3,23 @@
 double HuberDistributionGetNumber(double form_factor, double shift_factor,
                                   double scale_factor) {
   if (form_factor <= 0 || scale_factor <= 0) {
-    return NAN;
+    return NAN; // Если хотя бы один из них меньше или равен нулю, функция возвращает значение NAN (Not-a-Number), что может означать ошибку или некорректные входные данные.
   }
   double res = 0.0;
   double K_coefficient =
       2.0 * standardDistributionDensity(form_factor) / form_factor +
       2 * standardDistributionFunction(form_factor) - 1;
   double P_coefficient =
-      (2.0 * standardDistributionFunction(form_factor) - 1) / K_coefficient;
+      (2.0 * standardDistributionFunction(form_factor) - 1) / K_coefficient; // центральный интервал
 
-  double first_rand = uniformDistributionGetNumber();
+  double first_rand = uniformDistributionGetNumber(); //  Вероятно, это случайное число, полученное из равномерного распределения.
 
   if (first_rand <= P_coefficient) {
     res = form_factor + 1;
     while (!(-form_factor <= res && res <= form_factor)) {
       double r1 = uniformDistributionGetNumber(),
              r2 = uniformDistributionGetNumber();
-      res = sqrt(-2.0 * log(r1)) * cos(2.0 * M_PI * r2);
+      res = sqrt(-2.0 * log(r1)) * cos(2.0 * M_PI * r2); // реализация нормальной случайной величины
     }
   } else {
     double r1 = 0;
